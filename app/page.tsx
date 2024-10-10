@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { MessageSquare, ArrowRight, Menu, X, Sun, Moon } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import ReactMarkdown from 'react-markdown'
 
 type Message = {
   id: number
@@ -249,7 +250,7 @@ export default function Component() {
                           ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
                           : 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
                       }`}>
-                        {message.text}
+                        <MarkdownRenderer markdown={message.text} />
                       </span>
                     </div>
                   ))}
@@ -276,4 +277,8 @@ export default function Component() {
       </AnimatePresence>
     </div>
   )
+}
+
+const MarkdownRenderer = ({ markdown }: { markdown: string }) => {
+  return <ReactMarkdown>{markdown}</ReactMarkdown>
 }
