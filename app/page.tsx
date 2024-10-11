@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { MessageSquare, ArrowRight, Menu, X, Sun, Moon } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
+import Link from 'next/link'
 
 type Message = {
   id: number
@@ -104,11 +105,11 @@ export default function Component() {
       <header className="border-b dark:border-gray-700">
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
-            <div className="text-2xl font-bold text-gray-800 dark:text-white">Overheid Assistent</div>
+            <div className="text-2xl font-bold text-gray-800 dark:text-white">Overheidsgemak</div>
             <nav className="hidden md:flex space-x-6">
-              <a href="#" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">Home</a>
-              <a href="#" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">Over ons</a>
-              <a href="#" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">Contact</a>
+              <a href="#" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"></a>
+              <a href="#" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"></a>
+              <a href="#" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"></a>
             </nav>
             <div className="flex items-center space-x-4">
               <Button variant="ghost" onClick={toggleDarkMode} aria-label="Schakel donkere modus">
@@ -126,7 +127,7 @@ export default function Component() {
         <section className="py-20 bg-gray-50 dark:bg-gray-800">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-6">Welkom bij de Overheid Assistent</h1>
+              <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-6">Welkom bij Overheidsgemak</h1>
               <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
                 Krijg direct antwoord op al uw vragen over overheidsdiensten. 
                 Onze AI-assistent staat 24/7 voor u klaar.
@@ -150,7 +151,7 @@ export default function Component() {
             >
               <div className="bg-white dark:bg-gray-800 w-full max-w-4xl h-[80vh] rounded-lg shadow-lg flex flex-col">
                 <div className="p-4 sm:p-6 border-b dark:border-gray-700 flex justify-between items-center">
-                  <h2 className="text-2xl font-semibold dark:text-white">Chat met Overheid Assistent</h2>
+                  <h2 className="text-2xl font-semibold dark:text-white">Chat met Overheidsgemak</h2>
                   <Button variant="ghost" onClick={toggleChat} className="p-2" aria-label="Sluit chat">
                     <X className="h-5 w-5" />
                   </Button>
@@ -192,7 +193,7 @@ export default function Component() {
 
         <section className="py-20 bg-white dark:bg-gray-900">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-12 text-center">Waarom de Overheid Assistent gebruiken?</h2>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-12 text-center">Waarom Overheidsgemak gebruiken?</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="bg-blue-100 dark:bg-blue-900 rounded-full p-4 inline-block mb-4">
@@ -226,30 +227,30 @@ export default function Component() {
             <div>
               <h3 className="text-lg font-semibold mb-4">Over ons</h3>
               <p className="text-gray-400 dark:text-gray-300">
-                De Overheid Assistent is een innovatief platform dat burgers helpt 
+                Overheidsgemak is een innovatief platform dat burgers helpt 
                 bij het navigeren door overheidsdiensten en -informatie.
               </p>
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">Snelle links</h3>
               <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 dark:text-gray-300 hover:text-white">Home</a></li>
-                <li><a href="#" className="text-gray-400 dark:text-gray-300 hover:text-white">Over ons</a></li>
-                <li><a href="#" className="text-gray-400 dark:text-gray-300 hover:text-white">Veelgestelde vragen</a></li>
-                <li><a href="#" className="text-gray-400 dark:text-gray-300 hover:text-white">Contact</a></li>
+                <li><a href="#" className="text-gray-400 dark:text-gray-300 hover:text-white"></a></li>
+                <li><a href="#" className="text-gray-400 dark:text-gray-300 hover:text-white"></a></li>
+                <li><Link href="/faq" className="text-gray-400 dark:text-gray-300 hover:text-white">Veelgestelde vragen</Link></li>
+                <li><a href="#" className="text-gray-400 dark:text-gray-300 hover:text-white"></a></li>
               </ul>
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">Contact</h3>
               <p className="text-gray-400 dark:text-gray-300">
-                Email: info@overheidassistent.nl<br />
+                Email: info@overheidsgemak.nl<br />
                 Tel: 0800-1234567<br />
                 Adres: Hoofdstraat 1, 1234 AB Amsterdam
               </p>
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-gray-800 dark:border-gray-700 text-center text-gray-400 dark:text-gray-300">
-            <p>&copy; 2023 Overheid Assistent. Alle rechten voorbehouden.</p>
+            <p>&copy; 2023 Overheidsgemak. Alle rechten voorbehouden.</p>
           </div>
         </div>
       </footer>
