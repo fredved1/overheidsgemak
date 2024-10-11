@@ -1,4 +1,3 @@
-// client toegevoegd
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
@@ -92,9 +91,13 @@ export default function Component() {
     }
   }
 
+
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
+    const messagesContainer = document.querySelector('.overflow-y-auto');
+    if (messagesContainer) {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+  }, [messages]);
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'dark bg-gray-900' : 'bg-white'}`}>
@@ -135,6 +138,57 @@ export default function Component() {
             </div>
           </div>
         </section>
+
+        <AnimatePresence>
+          {isChatOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: '100%' }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: '100%' }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8"
+            >
+              <div className="bg-white dark:bg-gray-800 w-full max-w-4xl h-[80vh] rounded-lg shadow-lg flex flex-col">
+                <div className="p-4 sm:p-6 border-b dark:border-gray-700 flex justify-between items-center">
+                  <h2 className="text-2xl font-semibold dark:text-white">Chat met Overheid Assistent</h2>
+                  <Button variant="ghost" onClick={toggleChat} className="p-2" aria-label="Sluit chat">
+                    <X className="h-5 w-5" />
+                  </Button>
+                </div>
+                <div className="flex-grow overflow-y-auto p-4 sm:p-6">
+                  {messages.map((message) => (
+                    <div key={message.id} className={`mb-4 ${message.sender === 'user' ? 'text-right' : 'text-left'}`}>
+                      <span className={`inline-block p-3 rounded-lg ${
+                        message.sender === 'user' 
+                          ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
+                          : 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+                      }`}>
+                        <MarkdownRenderer markdown={message.text} />
+                      </span>
+                    </div>
+                  ))}
+                  <div ref={chatEndRef} />
+                </div>
+                <div className="p-4 sm:p-6 border-t dark:border-gray-700">
+                  <div className="flex space-x-2">
+                    <Input 
+                      ref={inputRef}
+                      value={input} 
+                      onChange={(e) => setInput(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                      placeholder="Typ uw vraag hier..."
+                      className="flex-grow dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 px-3 py-2"
+                      aria-label="Chat input"
+                    />
+                    <Button onClick={handleSend} className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2" aria-label="Verstuur bericht">
+                      Verstuur
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <section className="py-20 bg-white dark:bg-gray-900">
           <div className="container mx-auto px-4">
@@ -199,82 +253,6 @@ export default function Component() {
           </div>
         </div>
       </footer>
-
-      <AnimatePresence>
-        {!isChatOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.3 }}
-            className="fixed bottom-4 right-4"
-          >
-            <Button
-              onClick={toggleChat}
-              className="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-lg"
-              aria-label="Open chat"
-            >
-              <MessageSquare className="h-6 w-6" />
-            </Button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {isChatOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed bottom-4 right-4 w-96 h-[80vh] max-h-[600px] shadow-xl"
-          >
-            <Card className="h-full">
-              <CardContent className="p-4 flex flex-col h-full">
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-lg font-semibold dark:text-white">Chat met Overheid Assistent</h2>
-                  <div className="flex space-x-2">
-                    <Button variant="ghost" onClick={clearMemory} className="p-1" aria-label="Wis geheugen">
-                      <X className="h-5 w-5" />
-                    </Button>
-                    <Button variant="ghost" onClick={toggleChat} className="p-1" aria-label="Sluit chat">
-                      <X className="h-5 w-5" />
-                    </Button>
-                  </div>
-                </div>
-                <div className="flex-grow bg-gray-50 dark:bg-gray-800 rounded-lg p-4 mb-4 overflow-y-auto">
-                  {messages.map((message) => (
-                    <div key={message.id} className={`mb-4 ${message.sender === 'user' ? 'text-right' : 'text-left'}`}>
-                      <span className={`inline-block p-2 rounded-lg ${
-                        message.sender === 'user' 
-                          ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
-                          : 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
-                      }`}>
-                        <MarkdownRenderer markdown={message.text} />
-                      </span>
-                    </div>
-                  ))}
-                  <div ref={chatEndRef} />
-                </div>
-                <div className="flex space-x-2">
-                  <Input 
-                    ref={inputRef}
-                    value={input} 
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Typ uw vraag hier..."
-                    className="flex-grow dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
-                    aria-label="Chat input"
-                  />
-                  <Button onClick={handleSend} className="bg-blue-600 hover:bg-blue-700 text-white" aria-label="Verstuur bericht">
-                    <ArrowRight className="h-5 w-5" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   )
 }
